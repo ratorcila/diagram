@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Diagramas</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<style>
+		body
+		{
+			background: #e0e0e0;
+		}
+		.hoja
+		{
+			height: 600px;
+			border: .5px solid;
+			background-color: #fff;
+			background-size: 20px 20px;
+		    background-image: -webkit-linear-gradient(left, grey .2px, transparent 1px), -webkit-linear-gradient(grey .2px, transparent 1px);
+		    background-image: -o-linear-gradient(left, grey .2px, transparent 1px), -o-linear-gradient(grey .2px, transparent 1px);
+		    background-image: linear-gradient(to right, grey .2px, transparent 1px), linear-gradient(grey .2px, transparent 1px);
+		}
+		.whiteBack-blackBorder
+		{
+			background-color: #fff;
+			border: .5px solid;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3 whiteBack-blackBorder">
+				<div id="figuras" class="btn-group-vertical" data-toggle="buttons">
+					<label class="btn btn-primary active">
+						<input type="radio" name="opcFig" id="opc1" autocomplete="off" value="1">figura 1: cuadrado
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" name="opcFig" id="opc2" autocomplete="off" value="2">figura 2:Triangulo
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" name="opcFig" id="opc3" autocomplete="off" value="3">figura 3: Rombo
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" name="opcFig" id="opc4" autocomplete="off" value="4">figura 4: circulo
+					</label>
+					<label class="btn btn-primary">
+						<input type="radio" name="opcFig" id="opc5" autocomplete="off" value="5">figura 5: Romboide
+					</label>
+				</div>
+			</div>
+			<div class="col-md-6 col-md-offset-1 hoja" id="contenedor"><canvas id="workplace"></canvas></div>
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script>
+		var figura = 1;
+		$('#figuras').on('change',function (event) {
+			figura = $('input[name=opcFig]:checked', '#figuras').val();
+		});
+		function getMousePos(canvas, evt) {
+			var rect = canvas.getBoundingClientRect();
+			return {
+				x: evt.clientX - rect.left,
+				y: evt.clientY - rect.top
+			};
+		}
+		$(document).ready(function () {
+			var contenedor = document.getElementById('contenedor');
+			var canvas = document.getElementById('workplace');
+			canvas.width = $(contenedor).width();
+			canvas.height = $(contenedor).height();
+			var ctx = canvas.getContext('2d');
+			canvas.addEventListener('mousedown',function (evt) {
+				var pos = getMousePos(canvas,evt);
+				switch(figura)
+				{
+					case 1:case "1":
+						ctx.beginPath();
+						ctx.fillStyle = 'white';
+						ctx.rect(pos.x-50,pos.y-50,100,100);
+						ctx.fill();
+						ctx.lineWidth = 2;
+						ctx.strokeStyle = 'black';
+						ctx.stroke();
+						break;
+				}
+			});
+		});
+	</script>
+</body>
+</html>
